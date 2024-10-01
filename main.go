@@ -2,6 +2,7 @@ package main
 
 import (
 	"CmdTool/cat"
+	"CmdTool/find"
 	"CmdTool/helper"
 	"CmdTool/ls"
 	"CmdTool/mkdir"
@@ -93,6 +94,19 @@ func main() {
 				for _, e := range errInfo {
 					fmt.Fprintln(writer, e)
 				}
+			default:
+				fmt.Fprintf(writer, "[ERROR] syntax error: royal %s\n", strings.Join(args, " "))
+				fmt.Fprintln(writer, "Try 'royal -h' for more information.")
+			}
+		case "find": // find filename
+			switch {
+			case length == 2: // find只能一次查找一个文件   打印找到的所有文件
+				spendTime, result := find.Find(args[1])
+				for _, r := range result {
+					fmt.Fprintln(writer, r)
+				}
+				fmt.Fprintf(writer, "find %d files total\n", len(result))
+				fmt.Fprintf(writer, "cost time: %v (so fast, hahaha)\n", spendTime)
 			default:
 				fmt.Fprintf(writer, "[ERROR] syntax error: royal %s\n", strings.Join(args, " "))
 				fmt.Fprintln(writer, "Try 'royal -h' for more information.")

@@ -71,7 +71,13 @@ func Writer(writer *bufio.Writer) {
 		usage: "royal rm filename [filename] [...]  or royal rm -r dirname [dirname] [...]",
 	})
 
-	defer writer.Flush()
+	helpSlice = append(helpSlice, &Helper{
+		name:  "find",
+		tips:  "find all files and directories under the current directory.",
+		usage: "royal find filename",
+	})
+
+	// defer writer.Flush()
 	fmt.Fprintln(writer, "Usage of royal tool:")
 	for _, v := range helpSlice {
 		fmt.Fprintf(writer, "\t%s\n", v.name)
